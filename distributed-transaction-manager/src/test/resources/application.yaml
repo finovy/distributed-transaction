@@ -1,0 +1,33 @@
+server:
+  port: ${SERVER_PORT:6092}
+  shutdown: graceful
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 120s
+  application:
+    id: ${APPLICATION_NAME:distributed}
+    name: ${APPLICATION_NAME:distributed}
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:nacos:${APPLICATION_NAME:distributed}.yaml
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:code_analysis}
+      password: ${NACOS_PASSWORD:code_analysis}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+        namespace: ${NACOS_CONFIG_NAMESPACE:code_analysis}
+        group-id: ${NACOS_CONFIG_GROUPID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:code_analysis}
+        group-id: ${NACOS_DISCOVERY_GROUPID:DISCOVERY_GROUP}
+        enabled: true
+        register-enabled: true
+
+logging:
+  config: classpath:logback-spring.xml

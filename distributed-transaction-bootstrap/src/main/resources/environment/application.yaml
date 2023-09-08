@@ -1,0 +1,123 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: ${APPLICATION_NAME:distributed-transaction}
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:nacos:${APPLICATION_NAME:distributed-transaction}.yaml
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:}
+      password: ${NACOS_PASSWORD:}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+        namespace: ${NACOS_CONFIG_NAMESPACE:}
+        group-id: ${NACOS_CONFIG_GROUP_ID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:}
+        group-id: ${NACOS_DISCOVERY_GROUP_ID:DEFAULT_GROUP}
+        enabled: true
+        register-enabled: true
+    sentinel:
+      transport:
+        port: ${SENTINEL_DASHBOARD_PORT:8719}
+        dashboard: ${SENTINEL_DASHBOARD_ADDR:}
+      datasource:
+        flow-nacos:
+          nacos:
+            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+            namespace: ${NACOS_CONFIG_NAMESPACE:}
+            group-id: ${NACOS_SENTINEL_FLOW_GROUP_ID:SENTINEL_FLOW_GROUP}
+            rule-type: FLOW
+            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+            data-type: json
+            file-extension: json
+        degrade-nacos:
+          nacos:
+            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+            namespace: ${NACOS_CONFIG_NAMESPACE:}
+            group-id: ${NACOS_SENTINEL_DEGRADE_GROUP_ID:SENTINEL_DEGRADE_GROUP}
+            rule-type: DEGRADE
+            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+            data-type: json
+            file-extension: json
+        system-nacos:
+          nacos:
+            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+            namespace: ${NACOS_CONFIG_NAMESPACE:}
+            group-id: ${NACOS_SENTINEL_SYSTEM_GROUP_ID:SENTINEL_SYSTEM_GROUP}
+            rule-type: SYSTEM
+            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+            data-type: json
+            file-extension: json
+        param-flow-nacos:
+          nacos:
+            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+            namespace: ${NACOS_CONFIG_NAMESPACE:}
+            group-id: ${NACOS_SENTINEL_PARAM_FLOW_GROUP_ID:SENTINEL_PARAM_FLOW_GROUP}
+            rule-type: PARAM_FLOW
+            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+            data-type: json
+            file-extension: json
+        authority-nacos:
+          nacos:
+            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+            namespace: ${NACOS_CONFIG_NAMESPACE:}
+            group-id: ${NACOS_SENTINEL_AUTHORITY_GROUP_ID:SENTINEL_AUTHORITY_GROUP}
+            rule-type: AUTHORITY
+            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+            data-type: json
+            file-extension: json
+  datasource:
+    url: jdbc:h2:~/distributed-transaction;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: transaction_group
+  enable-auto-data-source-proxy: false
+  config:
+    type: nacos
+    nacos:
+      serverAddr: ${NACOS_CONFIG_SERVER_ADDR:}
+      namespace: ${NACOS_CONFIG_NAMESPACE:}
+      group: ${NACOS_SEATA_GROUP_ID:SEATA_GROUP}
+      dataId: ${NACOS_SEATA_DATA_ID:distributed-transaction-seata-client}.properties
+      username: ${NACOS_USERNAME:}
+      password: ${NACOS_PASSWORD:}
+  registry:
+    type: nacos
+    nacos:
+      application: ${NACOS_SEATA_APPLICATION_NAME:distributed-transaction-seata-server}
+      server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:}
+      namespace: ${NACOS_DISCOVERY_NAMESPACE:}
+      group: ${NACOS_SEATA_GROUP_ID:SEATA_GROUP}
+      username: ${NACOS_USERNAME:}
+      password: ${NACOS_PASSWORD:}
+#build:
+#  time: @build.time@
+
+distributed-transaction:
+  kubernetes:
+    service-headless: ${KUBERNETES_SERVICE_HEADLESS:}
+
+logging:
+  config: classpath:logback-spring.xml
+  project: ${LOG_STORE_PROJECT:}
+  endpoint-url: ${LOG_STORE_ENDPOINT:}
+  access-key: ${LOG_STORE_KEY:}
+  access-secret: ${LOG_STORE_SECRET:}
+  log-store: ${APPLICATION_NAME:distributed-transaction}
+  topic: ${LOG_STORE_TOPIC:${APPLICATION_NAME:distributed-transaction}}
+  console-level: ${LOG_CONSOLE_LEVEL:WARN}
+  file-level: ${LOG_FILE_LEVEL:WARN}
+  host-name: ${HOSTNAME:}

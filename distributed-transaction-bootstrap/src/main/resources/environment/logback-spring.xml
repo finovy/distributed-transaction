@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <springProperty scope="context" name="application" source="spring.application.name" defaultValue="application"/>
+    <springProperty scope="context" name="endpointUrl" source="logging.endpoint-url" defaultValue=""/>
+    <springProperty scope="context" name="accessKeyId" source="logging.access-key" defaultValue=""/>
+    <springProperty scope="context" name="accessKeySecret" source="logging.access-secret" defaultValue=""/>
+    <springProperty scope="context" name="logStore" source="logging.log-store" defaultValue="log-store"/>
+    <springProperty scope="context" name="project" source="logging.project" defaultValue="app-project"/>
+    <springProperty scope="context" name="topic" source="logging.topic" defaultValue="app-log"/>
+    <springProperty scope="context" name="consoleLevel" source="logging.console-level" defaultValue="WARN"/>
+    <springProperty scope="context" name="fileLevel" source="logging.file-level" defaultValue="WARN"/>
+    <springProperty scope="context" name="hostName" source="logging.host-name" defaultValue=""/>
+    <contextName>${application}</contextName>
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+    <appender name="http" class="tech.finovy.framework.logappender.LogHttpAppender">
+        <endpoint>${endpointUrl}</endpoint>
+        <accessKeyId>${accessKeyId}</accessKeyId>
+        <accessKeySecret>${accessKeySecret}</accessKeySecret>
+        <project>${project}</project>
+        <logStore>${application}</logStore>
+        <appName>${application}</appName>
+        <topic>${topic}</topic>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %line- %msg%n</pattern>
+        </encoder>
+        <mdcFields>appid,traceid</mdcFields>
+    </appender>
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${fileLevel}</level>
+        </filter>
+        <file>/app/log/app/${hostName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="RocketmqClientAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${fileLevel}</level>
+        </filter>
+        <file>/app/log/app/${hostName}-mq.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}.%d{yyyy-MM-dd}-mq.zip</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="org.apache.http.impl.conn.Wire" level="WARN"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${consoleLevel}</level>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %line- %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>true</neverBlock>
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>false</neverBlock>
+        <appender-ref ref="fileAppender"/>
+    </appender>
+    <logger name="tech.finovy" level="INFO" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="http"/>
+        <appender-ref ref="file"/>
+    </logger>
+    <root level="WARN" additivity="false">
+        <appender-ref ref="http"/>
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>

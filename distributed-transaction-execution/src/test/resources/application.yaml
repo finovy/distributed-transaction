@@ -1,0 +1,68 @@
+server:
+  port: ${SERVER_PORT:7092}
+spring:
+  application:
+    name: ${APPLICATION_NAME:distributed}
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import:
+      - optional:nacos:${APPLICATION_NAME:distributed}.yaml
+  cloud:
+    nacos:
+      username: ${NACOS_USERNAME:code_analysis}
+      password: ${NACOS_PASSWORD:code_analysis}
+      config:
+        server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+        namespace: ${NACOS_CONFIG_NAMESPACE:code_analysis}
+        group-id: ${NACOS_CONFIG_GROUP_ID:DEFAULT_GROUP}
+        file-extension: yaml
+        maxRetry: 10
+      discovery:
+        server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:}
+        namespace: ${NACOS_DISCOVERY_NAMESPACE:code_analysis}
+        group-id: ${NACOS_DISCOVERY_GROUP_ID:DEFAULT_GROUP}
+        enabled: true
+        register-enabled: true
+  datasource:
+    #    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    #    platform: h2
+    username: sa
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+    schema: classpath:db/schema-h2.sql
+    data: classpath:db/data-h2.sql
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: framework_tx_group
+  enable-auto-data-source-proxy: false
+  config:
+    type: nacos
+    nacos:
+      serverAddr: ${NACOS_CONFIG_SERVER_ADDR:}
+      namespace: ${NACOS_CONFIG_NAMESPACE:code_analysis}
+      group: ${NACOS_SEATA_GROUP_ID:SEATA_GROUP}
+      dataId: ${NACOS_SEATA_DATA_ID:framework-seata-client}.properties
+      username: ${NACOS_USERNAME:code_analysis}
+      password: ${NACOS_PASSWORD:code_analysis}
+  registry:
+    type: nacos
+    nacos:
+      application: ${NACOS_SEATA_APPLICATION_NAME:framework-seata-server}
+      server-addr: ${NACOS_DISCOVERY_SERVER_ADDR:}
+      namespace: ${NACOS_DISCOVERY_NAMESPACE:code_analysis}
+      group: ${NACOS_SEATA_GROUP_ID:SEATA_GROUP}
+      username: ${NACOS_USERNAME:code_analysis}
+      password: ${NACOS_PASSWORD:code_analysis}
+
+distributed:
+  manager:
+    is-client: false
+  kubernetes:
+    service-headless: ${KUBERNETES_SERVICE_HEADLESS:}
+
+
+logging:
+  config: classpath:logback-spring.xml
