@@ -6,7 +6,7 @@
   <a href="https://distributed-transaction.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/distributed-transaction/badge/?version=latest"></a>
 </p>
 
-The project utilizes Redis, Segment, and Snowflake as its primary distributed ID generation solutions, aiming to minimize external dependencies and standardize internal processes for generating distributed IDs within the team. The project offers three access methods: Http, Rpc, and Grpc, to cater to the diverse language requirements of internal projects as much as possible.
+This project is built upon the Seata TCC mode to create an internal TCC framework, aiming to reduce external dependencies. The framework integrates with various projects through custom components, catering to the needs of internal projects to the fullest extent. It not only possesses complex disaster recovery solutions, including multi-center fault tolerance, but also reaches higher levels in terms of architecture and functionality.
 
 
 English | [中文版](README_CN.md)
