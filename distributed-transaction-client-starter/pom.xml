@@ -14,7 +14,7 @@
 
     <properties>
         <reflections.version>0.10.2</reflections.version>
-        <dubbo.version>2.7.15</dubbo.version>
+        <dubbo.version>2.7.22</dubbo.version>
     </properties>
 
 
