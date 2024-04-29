@@ -29,7 +29,7 @@ Distributed-Transaction
 - Spring Cloud Alibaba 2022.0.0.0-RC2
 - Seata 1.7.0-native-rc2
 - Sentinel 1.8.6
-- Nacos 2.2.2
+- Nacos 2.3.2
 
 ## 功能特性
 

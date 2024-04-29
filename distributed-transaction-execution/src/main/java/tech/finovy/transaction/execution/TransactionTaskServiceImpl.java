@@ -1,6 +1,5 @@
 package tech.finovy.transaction.execution;
 
-import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import io.seata.core.exception.TransactionException;
 import io.seata.rm.tcc.api.LocalTCC;
@@ -15,6 +14,7 @@ import tech.finovy.transaction.entity.*;
 import tech.finovy.transaction.execution.action.TCCTransactionAction;
 import tech.finovy.transaction.execution.remote.CallRemoteExecutor;
 import tech.finovy.transaction.execution.remote.CallableResult;
+import tech.finovy.transaction.execution.utils.idgenerator.IdUtils;
 import tech.finovy.transaction.store.LogStoreProcessor;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class TransactionTaskServiceImpl<T> implements TransactionTaskService<T> 
     @Override
     public TransactionIdentity transactionNo(String transactionType, String requestRamdId) {
         TransactionIdentity transactionIdentity = new TransactionIdentity(transactionType, requestRamdId);
-        transactionIdentity.setTxId(String.valueOf(IdUtil.getSnowflake(1,1).nextIdStr()));
+        transactionIdentity.setTxId(String.valueOf(IdUtils.snowflakeId()));
         transactionIdentity.setTxRequestId(requestRamdId);
         transactionIdentity.setCode(ResultCode.SUCCESS);
         return transactionIdentity;

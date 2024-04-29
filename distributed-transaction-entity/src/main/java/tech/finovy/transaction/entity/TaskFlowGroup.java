@@ -1,7 +1,8 @@
 package tech.finovy.transaction.entity;
 
 
-import tech.finovy.framework.config.nacos.entity.AbstractNacosConfigGroup;
+
+import tech.finovy.framework.nacos.entity.AbstractNacosConfigGroup;
 
 import java.io.Serializable;
 import java.util.List;

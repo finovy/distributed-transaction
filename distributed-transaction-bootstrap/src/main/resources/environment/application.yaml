@@ -1,5 +1,6 @@
 server:
   port: 8080
+  shutdown: graceful
 spring:
   application:
     name: ${APPLICATION_NAME:distributed-transaction}
@@ -24,56 +25,56 @@ spring:
         group-id: ${NACOS_DISCOVERY_GROUP_ID:DEFAULT_GROUP}
         enabled: true
         register-enabled: true
-    sentinel:
-      transport:
-        port: ${SENTINEL_DASHBOARD_PORT:8719}
-        dashboard: ${SENTINEL_DASHBOARD_ADDR:}
-      datasource:
-        flow-nacos:
-          nacos:
-            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
-            namespace: ${NACOS_CONFIG_NAMESPACE:}
-            group-id: ${NACOS_SENTINEL_FLOW_GROUP_ID:SENTINEL_FLOW_GROUP}
-            rule-type: FLOW
-            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
-            data-type: json
-            file-extension: json
-        degrade-nacos:
-          nacos:
-            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
-            namespace: ${NACOS_CONFIG_NAMESPACE:}
-            group-id: ${NACOS_SENTINEL_DEGRADE_GROUP_ID:SENTINEL_DEGRADE_GROUP}
-            rule-type: DEGRADE
-            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
-            data-type: json
-            file-extension: json
-        system-nacos:
-          nacos:
-            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
-            namespace: ${NACOS_CONFIG_NAMESPACE:}
-            group-id: ${NACOS_SENTINEL_SYSTEM_GROUP_ID:SENTINEL_SYSTEM_GROUP}
-            rule-type: SYSTEM
-            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
-            data-type: json
-            file-extension: json
-        param-flow-nacos:
-          nacos:
-            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
-            namespace: ${NACOS_CONFIG_NAMESPACE:}
-            group-id: ${NACOS_SENTINEL_PARAM_FLOW_GROUP_ID:SENTINEL_PARAM_FLOW_GROUP}
-            rule-type: PARAM_FLOW
-            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
-            data-type: json
-            file-extension: json
-        authority-nacos:
-          nacos:
-            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
-            namespace: ${NACOS_CONFIG_NAMESPACE:}
-            group-id: ${NACOS_SENTINEL_AUTHORITY_GROUP_ID:SENTINEL_AUTHORITY_GROUP}
-            rule-type: AUTHORITY
-            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
-            data-type: json
-            file-extension: json
+#    sentinel:
+#      transport:
+#        port: ${SENTINEL_DASHBOARD_PORT:8719}
+#        dashboard: ${SENTINEL_DASHBOARD_ADDR:}
+#      datasource:
+#        flow-nacos:
+#          nacos:
+#            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+#            namespace: ${NACOS_CONFIG_NAMESPACE:}
+#            group-id: ${NACOS_SENTINEL_FLOW_GROUP_ID:SENTINEL_FLOW_GROUP}
+#            rule-type: FLOW
+#            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+#            data-type: json
+#            file-extension: json
+#        degrade-nacos:
+#          nacos:
+#            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+#            namespace: ${NACOS_CONFIG_NAMESPACE:}
+#            group-id: ${NACOS_SENTINEL_DEGRADE_GROUP_ID:SENTINEL_DEGRADE_GROUP}
+#            rule-type: DEGRADE
+#            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+#            data-type: json
+#            file-extension: json
+#        system-nacos:
+#          nacos:
+#            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+#            namespace: ${NACOS_CONFIG_NAMESPACE:}
+#            group-id: ${NACOS_SENTINEL_SYSTEM_GROUP_ID:SENTINEL_SYSTEM_GROUP}
+#            rule-type: SYSTEM
+#            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+#            data-type: json
+#            file-extension: json
+#        param-flow-nacos:
+#          nacos:
+#            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+#            namespace: ${NACOS_CONFIG_NAMESPACE:}
+#            group-id: ${NACOS_SENTINEL_PARAM_FLOW_GROUP_ID:SENTINEL_PARAM_FLOW_GROUP}
+#            rule-type: PARAM_FLOW
+#            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+#            data-type: json
+#            file-extension: json
+#        authority-nacos:
+#          nacos:
+#            server-addr: ${NACOS_CONFIG_SERVER_ADDR:}
+#            namespace: ${NACOS_CONFIG_NAMESPACE:}
+#            group-id: ${NACOS_SENTINEL_AUTHORITY_GROUP_ID:SENTINEL_AUTHORITY_GROUP}
+#            rule-type: AUTHORITY
+#            data-id: ${APPLICATION_NAME:distributed-transaction}-sentinel.json
+#            data-type: json
+#            file-extension: json
   datasource:
     url: jdbc:h2:~/distributed-transaction;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
@@ -118,6 +119,6 @@ logging:
   access-secret: ${LOG_STORE_SECRET:}
   log-store: ${APPLICATION_NAME:distributed-transaction}
   topic: ${LOG_STORE_TOPIC:${APPLICATION_NAME:distributed-transaction}}
-  console-level: ${LOG_CONSOLE_LEVEL:WARN}
-  file-level: ${LOG_FILE_LEVEL:WARN}
+  console-level: ${LOG_CONSOLE_LEVEL:DEBUG}
+  file-level: ${LOG_FILE_LEVEL:DEBUG}
   host-name: ${HOSTNAME:}

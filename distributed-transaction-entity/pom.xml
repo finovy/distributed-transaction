@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-starter-nacos-entity</artifactId>
+            <artifactId>framework-component-nacos-entity</artifactId>
         </dependency>
     </dependencies>
 </project>

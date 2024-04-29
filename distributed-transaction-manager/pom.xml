@@ -15,7 +15,6 @@
         <dependency>
             <groupId>tech.finovy</groupId>
             <artifactId>distributed-transaction-api</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>tech.finovy</groupId>

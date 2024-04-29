@@ -3,183 +3,62 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-build</artifactId>
-        <version>4.0.5</version>
+        <groupId>tech.finovy</groupId>
+        <artifactId>framework-cloud-parent</artifactId>
+        <version>0.2.2-SNAPSHOT</version>
     </parent>
-    <groupId>tech.finovy</groupId>
     <artifactId>distributed-transaction</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <revision>0.1.0-SNAPSHOT</revision>
-        <framework.version>0.1.0-SNAPSHOT</framework.version>
-        <logback.version>1.4.12</logback.version>
-        <lombok.version>1.18.26</lombok.version>
-        <fastjson.version>1.2.83</fastjson.version>
-        <hutool.version>5.8.21</hutool.version>
-        <nacos.client.version>2.2.2</nacos.client.version>
-        <mybatis-spring.version>2.3.0</mybatis-spring.version>
-        <druid.version>1.2.16</druid.version>
-        <rocketmq.version>5.0.0</rocketmq.version>
-        <servlet-api.version>3.1.0</servlet-api.version>
-        <!--Management-->
-        <spring.cloud.version>2022.0.2</spring.cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
-        <!-- Maven plugin versions -->
-        <!-- Build -->
-        <flatten-maven-plugin.version>1.4.0</flatten-maven-plugin.version>
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <revision>0.2.2-SNAPSHOT</revision>
     </properties>
 
     <modules>
         <module>distributed-transaction-api</module>
         <module>distributed-transaction-entity</module>
-        <module>distributed-transaction-execution</module>
         <module>distributed-transaction-manager</module>
         <module>distributed-transaction-store</module>
+        <module>distributed-transaction-execution</module>
         <module>distributed-transaction-client-starter</module>
         <module>distributed-transaction-bootstrap</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-            <!--Generic Version-->
-<!--            <dependency>-->
-<!--                <groupId>tech.finovy</groupId>-->
-<!--                <artifactId>framework-dependencies</artifactId>-->
-<!--                <version>${framework.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-http-logappender</artifactId>
-                <version>${framework.version}</version>
+                <artifactId>distributed-transaction-entity</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-config</artifactId>
-                <version>${framework.version}</version>
+                <artifactId>distributed-transaction-api</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-discovery</artifactId>
-                <version>${framework.version}</version>
+                <artifactId>distributed-transaction-manager</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-starter-nacos-entity</artifactId>
-                <version>${framework.version}</version>
+                <artifactId>distributed-transaction-store</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-http</artifactId>
-                <version>${framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-disruptor</artifactId>
-                <version>${framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>tech.finovy</groupId>
-                <artifactId>framework-core-commons</artifactId>
-                <version>${framework.version}</version>
-            </dependency>
-            <!--Custom-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-acl</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.rocketmq</groupId>
-                <artifactId>rocketmq-client</artifactId>
-                <version>${rocketmq.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-autoconfigure</artifactId>
-                <version>${mybatis-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-client</artifactId>
-                <version>${nacos.client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-api</artifactId>
-                <version>${nacos.client.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-common</artifactId>
-                <version>${nacos.client.version}</version>
+                <artifactId>distributed-transaction-execution</artifactId>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
         </dependency>
         <!--test-->
         <dependency>
@@ -213,82 +92,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Compiler -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <!-- Test -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-            </plugin>
-            <!-- Flatten -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                        <configuration>
-                            <updatePomFile>true</updatePomFile>
-                            <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                            <pomElements>
-                                <scm>remove</scm>
-                                <url>remove</url>
-                                <description>remove</description>
-                                <organization>remove</organization>
-                                <developers>remove</developers>
-                                <repositories>remove</repositories>
-                            </pomElements>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--Clean-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven-clean-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </build>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <url>${repository-releases}</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>${repository-snapshots}</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

@@ -14,14 +14,13 @@
 
     <properties>
         <reflections.version>0.10.2</reflections.version>
-        <dubbo.version>2.7.22</dubbo.version>
     </properties>
 
 
     <dependencies>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-core-commons</artifactId>
+            <artifactId>framework-common-util</artifactId>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
@@ -29,8 +28,8 @@
             <version>${reflections.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <groupId>tech.finovy</groupId>
+            <artifactId>framework-starter-nacos-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,19 +48,10 @@
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
-            <version>${dubbo.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-common</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -19,7 +19,6 @@
         <dependency>
             <groupId>tech.finovy</groupId>
             <artifactId>distributed-transaction-entity</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

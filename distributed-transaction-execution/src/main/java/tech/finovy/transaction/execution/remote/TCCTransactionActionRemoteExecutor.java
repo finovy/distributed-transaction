@@ -13,9 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import tech.finovy.framework.core.http.resttempalte.HttpTemplatePack;
-import tech.finovy.framework.core.http.resttempalte.HttpTemplateService;
+import org.springframework.web.client.RestTemplate;
+import tech.finovy.framework.http.resttempalte.HttpTemplatePack;
+import tech.finovy.framework.http.resttempalte.HttpTemplateService;
 import tech.finovy.transaction.execution.manager.listener.TransactionExecutionConfigDefinitionListener;
+import tech.finovy.transaction.execution.utils.idgenerator.IdUtils;
 import tech.finovy.transaction.store.LogStoreProcessor;
 import tech.finovy.transaction.execution.action.TCCTransactionAction;
 import tech.finovy.transaction.entity.TaskCallEntity;
@@ -28,11 +30,11 @@ import java.util.Map;
 @Service
 public class TCCTransactionActionRemoteExecutor implements TCCTransactionAction {
 
-    private final HttpTemplateService httpTemplateService;
+    private final HttpTemplateService<RestTemplate> httpTemplateService;
     private final TransactionExecutionConfigDefinitionListener manager;
     private final LogStoreProcessor transactionLogStoreService;
 
-    public TCCTransactionActionRemoteExecutor(HttpTemplateService httpTemplateService, TransactionExecutionConfigDefinitionListener manager, LogStoreProcessor transactionLogStoreService) {
+    public TCCTransactionActionRemoteExecutor(HttpTemplateService<RestTemplate> httpTemplateService, TransactionExecutionConfigDefinitionListener manager, LogStoreProcessor transactionLogStoreService) {
         this.httpTemplateService = httpTemplateService;
         this.manager = manager;
         this.transactionLogStoreService = transactionLogStoreService;
@@ -81,7 +83,7 @@ public class TCCTransactionActionRemoteExecutor implements TCCTransactionAction 
     @SneakyThrows
     private boolean call(TransactionTask transactionTask, String stage, String call, String api, String method, TaskCallEntity taskCall) {
         // todo  replace by distributed-id
-        long index = System.currentTimeMillis();
+        long index = IdUtils.snowflakeId();
         try {
             transactionLogStoreService.stageBegin(transactionTask, index, stage, call, api, method);
         } catch (Exception e) {
@@ -97,7 +99,7 @@ public class TCCTransactionActionRemoteExecutor implements TCCTransactionAction 
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set(HttpHeaders.ACCEPT_ENCODING, MediaType.ALL_VALUE);
         HttpEntity httpEntity = new HttpEntity<>(transactionTask.getInput(), headers);
-        HttpTemplatePack httpTemplatePack = httpTemplateService.choice(api);
+        HttpTemplatePack<RestTemplate> httpTemplatePack = httpTemplateService.choiceHttp(api, true);
         ResponseEntity<String> response = httpTemplatePack.getRestTemplate().exchange(httpTemplatePack.getHost() + "/" + method, HttpMethod.POST, httpEntity, String.class);
         if (taskCall.isDebug()) {
             log.info("Address:{}/{},HttpStatus:{},Request:{},Response:{}", api, method, response.getStatusCode(), JSON.toJSONString(httpEntity), response.getBody());

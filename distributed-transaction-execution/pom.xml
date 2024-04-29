@@ -14,11 +14,10 @@
         <dependency>
             <groupId>tech.finovy</groupId>
             <artifactId>distributed-transaction-store</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>tech.finovy</groupId>
-            <artifactId>framework-core-http</artifactId>
+            <artifactId>framework-starter-http</artifactId>
         </dependency>
         <dependency>
             <groupId>tech.finovy</groupId>
@@ -28,11 +27,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency>
-        <!--Util-->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 </project>
