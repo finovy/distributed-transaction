@@ -1,6 +1,6 @@
 package tech.finovy.transaction.client.client.fence;
 
-import tech.finovy.framework.core.common.exception.FrameworkErrorCode;
+import tech.finovy.framework.common.core.exception.FrameworkErrorCode;
 import tech.finovy.transaction.client.client.constant.Constants;
 import tech.finovy.transaction.client.client.exception.TCCFenceException;
 import org.apache.commons.lang.time.DateUtils;

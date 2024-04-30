@@ -1,7 +1,7 @@
 package tech.finovy.transaction.client.client.exception;
 
 
-import tech.finovy.framework.core.common.exception.FrameworkErrorCode;
+import tech.finovy.framework.common.core.exception.FrameworkErrorCode;
 
 public class TCCFenceException extends FrameworkException {
 

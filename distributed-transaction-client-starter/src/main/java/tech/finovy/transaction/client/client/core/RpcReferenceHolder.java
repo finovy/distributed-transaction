@@ -2,7 +2,7 @@ package tech.finovy.transaction.client.client.core;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.ReferenceConfig;
-import org.apache.dubbo.config.utils.ReferenceConfigCache;
+import org.apache.dubbo.config.utils.SimpleReferenceCache;
 
 public class RpcReferenceHolder {
 
@@ -19,6 +19,6 @@ public class RpcReferenceHolder {
         if (StringUtils.isNotEmpty(version)) {
             reference.setVersion(version);
         }
-        return ReferenceConfigCache.getCache().get(reference);
+        return SimpleReferenceCache.getCache().get(reference);
     }
 }

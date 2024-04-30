@@ -1,8 +1,8 @@
 package tech.finovy.transaction.client.client.fence;
 
-import tech.finovy.framework.core.common.exception.FrameworkErrorCode;
-import tech.finovy.framework.core.common.exception.SkipCallbackWrapperException;
-import tech.finovy.framework.core.common.thread.NamedThreadFactory;
+import org.apache.dubbo.common.utils.NamedThreadFactory;
+import tech.finovy.framework.common.core.exception.FrameworkErrorCode;
+import tech.finovy.framework.common.core.exception.SkipCallbackWrapperException;
 import tech.finovy.transaction.client.api.TccClientService;
 import tech.finovy.transaction.client.client.constant.TCCFenceConstant;
 import tech.finovy.transaction.client.client.exception.TCCFenceException;
@@ -268,7 +268,7 @@ public class TCCFenceHandler {
     private static void initLogCleanExecutor() {
         logCleanExecutor = new ThreadPoolExecutor(MAX_THREAD_CLEAN, MAX_THREAD_CLEAN, Integer.MAX_VALUE,
                 TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(),
-                new NamedThreadFactory("fenceLogCleanThread", MAX_THREAD_CLEAN, true)
+                new NamedThreadFactory("fenceLogCleanThread", true)
         );
         fenceLogCleanRunnable = new FenceLogCleanRunnable();
         logCleanExecutor.submit(fenceLogCleanRunnable);

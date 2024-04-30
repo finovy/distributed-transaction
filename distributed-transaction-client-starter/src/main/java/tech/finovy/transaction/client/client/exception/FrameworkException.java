@@ -2,7 +2,7 @@ package tech.finovy.transaction.client.client.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.finovy.framework.core.common.exception.FrameworkErrorCode;
+import tech.finovy.framework.common.core.exception.FrameworkErrorCode;
 
 import java.sql.SQLException;
 

@@ -1,9 +1,9 @@
 package tech.finovy.transaction.client.client.fence;
 
-import tech.finovy.framework.core.common.exception.DataAccessException;
-import tech.finovy.framework.core.common.exception.FrameworkErrorCode;
-import tech.finovy.framework.core.common.exception.StoreException;
-import tech.finovy.framework.core.common.util.IOUtil;
+import tech.finovy.framework.common.core.exception.DataAccessException;
+import tech.finovy.framework.common.core.exception.FrameworkErrorCode;
+import tech.finovy.framework.common.core.exception.StoreException;
+import tech.finovy.framework.common.core.util.IOUtil;
 import tech.finovy.transaction.client.client.constant.Constants;
 import tech.finovy.transaction.client.client.exception.TCCFenceException;
 
